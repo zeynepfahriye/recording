@@ -17,7 +17,6 @@ const App = () => {
       setTime(audioRecorderPlayer.mmssss(Math.floor(e.currentPosition)))
       setStart(true)
     })
-    console.log(result)
   }
 
   const onStop = async () => {
@@ -28,7 +27,7 @@ const App = () => {
   }
   const playRecord = async () => {
     const result = await audioRecorderPlayer.startPlayer()
-    console.log(result)
+
     audioRecorderPlayer.addPlayBackListener((e)=>{
        if(e.currentPosition == e.duration) {
          audioRecorderPlayer.stopPlayer()
@@ -36,7 +35,6 @@ const App = () => {
       setPlay(true)
       setPlayTime(audioRecorderPlayer.mmssss(Math.floor(e.currentPosition)))
       setPlayDuration(audioRecorderPlayer.mmssss(Math.floor(e.duration)))
-      
     })
   }
   const pauseRecord = async () => {
@@ -54,12 +52,14 @@ const App = () => {
         <Text>{time}</Text>
         {
           url !== '' &&
-          <View>
-          <Text>{playTime}-{playDuration}</Text>
+          <View style={{marginTop:100}}>
+          <Text style={{fontWeight:'bold',fontSize:25}}
+          >{`dinlenen kayıt süresi${playTime}`}</Text>
+          <Text style={{fontWeight:'bold',fontSize:25}}>{`kayıt süresi ${playDuration}`}</Text>
           <TouchableOpacity onPress={()=> {
             !play ? playRecord() : pauseRecord()
           }}>
-          <Text>{!play ? 'Dinle' :'Durdur'}</Text>
+          <Icon name={(!play ? 'play' :'pause' )}size={40} style={{alignSelf:'center',marginTop:30}}/>
           </TouchableOpacity>
           </View>
         }
